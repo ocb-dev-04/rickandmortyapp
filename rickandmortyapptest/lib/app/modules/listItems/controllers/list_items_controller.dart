@@ -19,15 +19,13 @@ class ListItemsController extends GetxController {
     super.onInit();
     searchController = TextEditingController();
     searchController.addListener(() {
-      print('Some');
-      if (searchController.text.isNotEmpty) {
-        final searchValue = searchController.text.toLowerCase().trimRight().trimLeft();
-        allCharacters.value =
-            RAndMCharacters(info: null, results: allCharactersTemp.value.results!.where((w) => w.name!.toLowerCase().contains(searchValue)).toList());
-      } else {
-        allCharacters = allCharactersTemp;
+      final searchValue = searchController.text.toLowerCase().trimRight().trimLeft();
+      final temp = allCharactersTemp.value.results!;
+      if (searchValue.isNotEmpty) {
+        allCharacters.value = RAndMCharacters(info: null, results: temp.where((w) => w.name!.toLowerCase().contains(searchValue)).toList());
+      } else if (searchValue.isEmpty) {
+        allCharacters.value = allCharactersTemp.value;
       }
-      update();
     });
     _services = Get.find<RickAndMortyServiceContract>();
   }
@@ -44,7 +42,9 @@ class ListItemsController extends GetxController {
     startLoading();
     try {
       allCharacters.value = await _services.getAllCharacters();
-      allCharactersTemp = allCharacters;
+      allCharactersTemp.value = allCharacters.value;
+      print('El total de resultados es de => ${allCharacters.value.results!.length}');
+      print('El total de resultados de temp es de => ${allCharactersTemp.value.results!.length}');
     } catch (e) {
       CustomSnackbars.showSnackbar(
         title: "Error",

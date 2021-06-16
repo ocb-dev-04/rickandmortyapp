@@ -10,10 +10,10 @@ class ListAllCharacters extends GetView<ListItemsController> {
     return Obx(
       () => ListView.separated(
         itemBuilder: (widget, i) {
-          final data = controller.allCharacters.value.results;
+          final data = controller.allCharacters.value.results!;
           return ListTile(
             leading: Hero(
-              tag: data![i].id!.toString(),
+              tag: data[i].id!.toString(),
               child: Image.network(data[i].image!),
             ),
             title: Text(data[i].name!),
