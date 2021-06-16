@@ -1,20 +1,12 @@
 import 'package:get/get.dart';
+import 'package:rickandmortyapptest/app/data/models/characters.dart';
 
 class ItemDetailsController extends GetxController {
-  //TODO: Implement ItemDetailsController
+  late Result singleCharacter;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    singleCharacter = Get.arguments as Result;
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

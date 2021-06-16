@@ -1,4 +1,7 @@
 include: package:pedantic/analysis_options.yaml
 linter:
   rules:
-    
+    unused_import: false
+    prefer_single_quotes: false
+    omit_local_variable_types: false
+    prefer_final_fields: false

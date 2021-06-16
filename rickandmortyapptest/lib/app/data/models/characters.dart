@@ -1,12 +1,12 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-Characters charactersFromJson(String str) => Characters.fromJson(json.decode(str));
+RAndMCharacters charactersFromJson(String str) => RAndMCharacters.fromJson(json.decode(str));
 
-String charactersToJson(Characters data) => json.encode(data.toJson());
+String charactersToJson(RAndMCharacters data) => json.encode(data.toJson());
 
-class Characters {
-  Characters({
+class RAndMCharacters {
+  RAndMCharacters({
     @required this.info,
     @required this.results,
   });
@@ -14,7 +14,7 @@ class Characters {
   final Info? info;
   final List<Result>? results;
 
-  factory Characters.fromJson(Map<String, dynamic> json) => Characters(
+  factory RAndMCharacters.fromJson(Map<String, dynamic> json) => RAndMCharacters(
         info: Info.fromJson(json["info"]),
         results: List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
       );
