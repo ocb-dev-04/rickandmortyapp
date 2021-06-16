@@ -5,3 +5,4 @@ linter:
     prefer_single_quotes: false
     omit_local_variable_types: false
     prefer_final_fields: false
+    missing_required_param: true

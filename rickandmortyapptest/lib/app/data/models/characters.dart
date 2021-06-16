@@ -11,8 +11,8 @@ class RAndMCharacters {
     @required this.results,
   });
 
-  final Info? info;
-  final List<Result>? results;
+  Info? info;
+  List<Result>? results;
 
   factory RAndMCharacters.fromJson(Map<String, dynamic> json) => RAndMCharacters(
         info: Info.fromJson(json["info"]),

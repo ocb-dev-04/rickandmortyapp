@@ -9,7 +9,8 @@ class ListItemsController extends GetxController {
   RxBool _loading = true.obs;
   bool get loading => _loading.value;
 
-  late RAndMCharacters allCharacters;
+  Rx<RAndMCharacters> allCharacters = RAndMCharacters().obs;
+  Rx<RAndMCharacters> allCharactersTemp = RAndMCharacters().obs;
   late RickAndMortyServiceContract _services;
   late TextEditingController searchController;
 
@@ -17,6 +18,17 @@ class ListItemsController extends GetxController {
   void onInit() {
     super.onInit();
     searchController = TextEditingController();
+    searchController.addListener(() {
+      print('Some');
+      if (searchController.text.isNotEmpty) {
+        final searchValue = searchController.text.toLowerCase().trimRight().trimLeft();
+        allCharacters.value =
+            RAndMCharacters(info: null, results: allCharactersTemp.value.results!.where((w) => w.name!.toLowerCase().contains(searchValue)).toList());
+      } else {
+        allCharacters = allCharactersTemp;
+      }
+      update();
+    });
     _services = Get.find<RickAndMortyServiceContract>();
   }
 
@@ -26,10 +38,13 @@ class ListItemsController extends GetxController {
     loadCharacters();
   }
 
+  void searchListener() {}
+
   Future<void> loadCharacters() async {
     startLoading();
     try {
-      allCharacters = await _services.getAllCharacters();
+      allCharacters.value = await _services.getAllCharacters();
+      allCharactersTemp = allCharacters;
     } catch (e) {
       CustomSnackbars.showSnackbar(
         title: "Error",
